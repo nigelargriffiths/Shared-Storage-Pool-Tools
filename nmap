@@ -1,0 +1,30 @@
+help()
+{
+        echo $0 "Nigel's nmap command to find if a LU (virtual disk) is mapped anywhere on the SSP to a LPAR/VM"
+        echo $0 " -h"
+        echo $0 " lu-name"
+        echo $0 " ALL"
+        exit 0
+}
+
+if [[ "$1" == "-h" ]]
+then
+	help
+	exit 0
+fi
+
+if [[ $(whoami) == "padmin" ]]
+then
+        command=$(whence $0)
+        # echo DEBUG I am padmin so restart $command again as the root user
+        echo "$command" $1 | oem_setup_env
+else
+	echo Seach the SSP for $1
+	if [[ "$1" == "ALL" ]]
+	then
+		clcmd /usr/ios/cli/ioscli  lsmap -all -field SVSA backing Physloc -fmt : 2>/dev/null  
+	else
+		clcmd /usr/ios/cli/ioscli  lsmap -all -field SVSA backing Physloc -fmt : 2>/dev/null  | grep -e NODE -e $1
+	fi
+fi
+

@@ -1,0 +1,35 @@
+help()
+{
+        echo $0 "Nigel's lu command with improved layout and column ordering"
+        echo $0 "[-sizemb | -usedmb | -used | -type | -tier | -name (default)]"
+        exit 0
+}
+
+if [[ $(whoami) == "padmin" ]]
+then
+        command=$(whence $0)
+        # echo DEBUG I am padmin so restart $command again as the root user
+        echo "$command" $1 | oem_setup_env
+else
+        # echo DEBUG now I am root
+        # lowercase the parameter with tr to avoid input case errors
+        case `echo $1 | tr "[A-Z]" "[a-z]" ` in
+        1 | -sizemb)            COLUMN="-nk 1" ;;
+        2 | -usedmb)            COLUMN="-nk 2" ;;
+        3 | -used | -used%)     COLUMN="-nk 3" ;;
+        4 | -type)              COLUMN="-k 4" ;;
+        5 | -tier)              COLUMN="-k 5" ;;
+        6 | -name)              COLUMN="-k 6" ;;
+        ? | -?)  help ;;
+        *)                      COLUMN="-k 6" ;;
+        esac
+
+        echo " SizeMB  UsedMB Used%  Type Tier   Name"
+
+        /usr/ios/cli/ioscli \
+        lu -list -field LU_SIZE LU_USED_SPACE LU_USED_PERCENT LU_PROVISION_TYPE TIER_NAME LU_NAME -fmt : \
+        | awk -F: '{ printf "%7d %7d %4d%% %5s %5s %s\n", $1, $2, $3, $4, $5, $6 } ' \
+        | sort $COLUMN
+fi
+exit 0
+

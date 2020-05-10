@@ -1,0 +1,2 @@
+/usr/ios/cli/ioscli cluster -status -verbose -fmt : -field "Node State" "Node Repos State" "Pool State" "Node Roles" "Node Upgrade Status" "Node Name" | \
+ awk -F: 'BEGIN { printf "No State Repos Pool Role ---Upgrade-Status--- Node-Name\n" ; } { printf "%2d %5s %5s %4s %4s %20s %s\n", NR, $1, $2, $3, $4, $5, $6; }'

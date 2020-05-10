@@ -1,0 +1,9 @@
+clustname=`ioscli cluster -list | grep NAME | awk '{ print $2 }' `
+echo name = $clustname
+ioscli lssp -clustername $clustname -field POOL_NAME POOL_SIZE \
+			FREE_SPACE TOTAL_LU_SIZE OVERCOMMIT_SIZE -fmt , | \
+awk -F , ' \
+        { printf( "Pool %s\nPool-Size=%8s MB\nPool-Used=%8d MB =%5.2f%%\nPool-Free=%8d MB =%5.2f%%\n\nAllocated to client VMs   =%8d MB\nAllocated compared to Pool=%5.2f%%\nUsed to Allocate Ratio =%5.2f%%\nOvercommit=%d MB\n", \
+          $1,      $2,       $2 - $3, ($2 - $3)/ $2 * 100, $3, $3/$2*100, $4, $4/$2*100, ($2 - $3)/$4*100, $5 )} \
+                '
+
