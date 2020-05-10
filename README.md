@@ -164,4 +164,17 @@ NODE indigovios1.aixncc.uk.ibm.com
 
 - Note 0x0000000b column is the Client LPAR/VM ID as found on the HMC
 
+# Nigel SSP config - nsspconf
+```
+./nsspconf_VIOS3
+Global ClusterName=orbit PoolName=orbit TotalSpace=6289408 TotalUsedSpace=2784136
 
+DiskName=hdisk4 capacity=393216 free=393152 tier=SYSTEM fg=v7000_tan
+DiskName=hdisk5 capacity=393216 free=393152 tier=SYSTEM fg=v7000_tan
+DiskName=hdisk6 capacity=393216 free=393152 tier=SYSTEM fg=v7000_tan
+. . . 
+LU=volume-vm220-a74b3c63-0000002e-boot-0-ef8bc3b7-2ff1 type=THIN_LU size=262144 free=168212 usage=93948 client_id=23 mtm=9009-22A067804940 VTD=vtscsi0 DRC=U9009.22A.7804940-V3-C47 udid=062d372aacffa30d81c5a73aa349bc2a
+LU=silver5 type=THIN_LU size=65536 free=64699 usage=840 client_id=4 mtm=9009-42A067804930 VTD=vtscsi0 DRC=U9009.42A.7804930-V1-C4 udid=fa670d2db6392eeef2fed0433a024571
+LU=vm16boot type=THIN_LU size=65536 free=34859 usage=26183 client_id=5 mtm=8408-E8E0221D494V VTD=vtscsi0 DRC=U8408.E8E.21D494V-V2-C16 udid=ec95b680d1e0ce7354fe56fe05ee09e0
+LU=silver5 type=THIN_LU size=65536 free=64699 usage=840 client_id=4 mtm=9009-42A067804930 VTD=vtscsi0 DRC=U9009.42A.7804930-V2-C4 udid=fa670d2db6392eeef2fed0433a024571
+```
