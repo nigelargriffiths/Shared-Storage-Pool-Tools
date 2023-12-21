@@ -26,7 +26,7 @@ WARNING: For details on how to use nslim you MUST read - mistakes could corrupt 
 
 
 This version includes the new -V option.
-## nsllin usage
+## nslim usage (this is a C program)
 ```
 $ ./nslim -?
 Usage: ./nslim (v4) is a filter style program using stdin & stdout
